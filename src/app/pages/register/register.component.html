@@ -1,0 +1,61 @@
+<div class="container">
+  <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
+    <div class="container container-fluid">
+
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title text-center pb-0 fs-4">CREATION DE COMPTE</h5>
+          <hr>
+          <div class="alert alert-danger" role="alert" *ngIf="errorMessages.length">
+            <p *ngFor="let msg of errorMessages">{{msg}}</p>
+          </div>
+
+          <!-- Multi Columns Form -->
+          <form class="row g-3">
+            <div class="col-md-12">
+              <label for="nom" class="form-label">Nom</label>
+              <input type="text" [(ngModel)]="userDto.nom" class="form-control" id="nom">
+            </div>
+
+            <div class="col-md-12">
+              <label for="prenoms" class="form-label">Prénoms</label>
+              <input type="text" [(ngModel)]="userDto.prenoms" class="form-control" id="prenoms">
+            </div>
+            <div class="col-md-6">
+              <label for="email" class="form-label">Email</label>
+              <input type="email" [(ngModel)]="userDto.email" class="form-control" id="email">
+            </div>
+            <div class="col-md-6">
+              <label for="motDePasse" class="form-label">Mot de Passe</label>
+              <input type="password" [(ngModel)]="userDto.motDePasse" class="form-control" id="motDePasse">
+            </div>
+
+            <div class="col-lg-12">
+              <label for="roleId" class="form-label">Role</label>
+              <select id="roleId" class="form-select" [(ngModel)]="userDto.roleId">
+                <option selected [value]="0">Liste des roles...</option>
+                <option *ngFor="let role of roles" [value]="role.id">{{role.role}}</option>
+              </select>
+            </div>
+
+            <div class="d-flex justify-content-between mb-3">
+              <button (click)="register()" type="button" class="btn btn-primary btn-sm">
+                <em class="fas fa-sign-in-alt">&nbsp;Creer</em>
+              </button>
+              <div>
+                 Deja un compte?&nbsp;
+                <button (click)="login()" type="button" class="btn btn-link">
+                  Se Connecter
+                </button>
+              </div>
+            </div>
+
+          </form><!-- End Multi Columns Form -->
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+</div>
+

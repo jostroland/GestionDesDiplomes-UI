@@ -1,0 +1,66 @@
+<div class="container">
+      <div class="p-3">
+        <h4>LISTE DES DIPLOMES</h4>
+        <div class="d-flex justify-content-end mb-3">
+          <a [routerLink]="'/main/diplome-new'" class="btn btn-success">
+            <em class="fas fa-plus"></em>&nbsp;Nouveau diplome
+          </a>
+        </div>
+
+        <div class="card p-3">
+          <table class="table table-bordered mb-0">
+            <thead>
+            <tr>
+              <th scope="col">Beneficiare</th>
+              <th scope="col">Date d'Obtention</th>
+              <th scope="col">Ministre</th>
+              <th scope="col">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let diplome of diplomes">
+              <th>{{diplome.beneficiaire}}</th>
+              <td>{{diplome.dateObtention | date:'MM/dd/yyyy'}}</td>
+              <td>{{diplome.ministreId}}</td>
+              <td class="cursor-pointer">
+                <em (click)="update(diplome.id)" class="ri-ball-pen-fill text-primary fs-5"></em>
+                &nbsp;&nbsp;
+                <em (click)="diplomeIdToDelete = diplome.id" class="ri-delete-bin-7-fill text-danger fs-5" data-bs-toggle="modal"
+                    data-bs-target="#staticBackdrop"></em>
+                &nbsp;
+                <em (click)="diplomeNumeroEnregToExportPdf(diplome.numeroEnreg)" class="ri-file-pdf-fill text-success fs-5"></em>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+  </div>
+
+
+
+      <!-- Modal -->
+      <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+           aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="staticBackdropLabel">Confirm!</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              Voulez-vous vraiment supprimer cette donnée?
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-link" (click)="diplomeIdToDelete = -1" data-bs-dismiss="modal">
+                <em class="fas fa-times"></em>&nbsp;Annuler
+              </button>
+              <button (click)="delete()" type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                <em class="fas fa-trash"></em>&nbsp;Supprimer
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+</div>

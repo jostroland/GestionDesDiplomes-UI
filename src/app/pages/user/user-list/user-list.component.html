@@ -1,0 +1,65 @@
+<div class="p-3">
+
+  <h2>Liste des utilisateurs</h2>
+  <div class="d-flex justify-content-end mb-3">
+    <a [routerLink]="'/main/user-new'" class="btn btn-success">
+      <em class="fas fa-plus"></em>&nbsp;Nouveau utilisateur
+    </a>
+  </div>
+  <div>
+
+    <table class="table table-bordered">
+      <thead>
+      <tr>
+        <th scope="col">Nom</th>
+        <th scope="col">Prenoms</th>
+        <th scope="col">Email</th>
+        <th scope="col">Active</th>
+       <!-- <th scope="col">Photo</th>-->
+        <th scope="col">Role</th>
+        <th scope="col">Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let user of users">
+        <th>{{user.nom}}</th>
+        <th>{{user.prenoms}}</th>
+        <th>{{user.email}}</th>
+        <th>{{user.active}}</th>
+        <!--<th>{{user.photo}}</th>-->
+        <th>{{user.roleId}}</th>
+        <td class="cursor-pointer">
+          <em (click)="update(user.id)" class="ri-ball-pen-fill text-primary"></em>
+          &nbsp;&nbsp;
+          <em (click)="userIdToDelete = user.id" class="ri-delete-bin-7-fill text-danger" data-bs-toggle="modal"
+              data-bs-target="#staticBackdrop"></em>
+
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Confirm!</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Voulez-vous réellement supprimer cette donnee ?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-link" (click)="userIdToDelete = -1" data-bs-dismiss="modal">
+          <em class="fas fa-times"></em>&nbsp;Annuler
+        </button>
+        <button (click)="delete()" type="button" class="btn btn-danger" data-bs-dismiss="modal">
+          <em class="fas fa-trash"></em>&nbsp;Supprimer
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

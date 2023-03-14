@@ -1,0 +1,41 @@
+<div class="p-3">
+
+  <h4>NOUVEAU MINISTRE</h4>
+  <div class="alert alert-danger" role="alert" *ngIf="errorMessages.length">
+    <p *ngFor="let msg of errorMessages">{{msg}}</p>
+  </div>
+
+  <div class="card p-3">
+    <div class="mb-3">
+      <label class="form-label">Civilité</label>
+      <select [(ngModel)]="ministre.civilite" class="form-select" aria-label="Default select example">
+        <option selected>Choisissez votre civilite</option>
+        <option [ngValue]="'M'">M</option>
+        <option [ngValue]="'Mme'">Mme</option>
+        <option [ngValue]="'Mlle'">Mlle</option>
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label for="nom" class="form-label">Nom</label>
+      <input [(ngModel)]="ministre.nom" type="text" class="form-control" id="nom" placeholder="Nom">
+    </div>
+    <div class="mb-3">
+      <label for="prenoms" class="form-label">Prénoms</label>
+      <input [(ngModel)]="ministre.prenoms" type="text" class="form-control" id="prenoms" placeholder="Prénoms">
+    </div>
+    <div class="mb-3">
+      <label for="datePriseFonction" class="form-label">Date de sa prise de fonction</label>
+      <input [(ngModel)]="ministre.datePriseFonction" type="date" class="form-control" id="datePriseFonction" placeholder="Date de prise de fonction">
+    </div>
+    <div class="d-flex justify-content-end">
+      <button (click)="cancel()" type="button" class="btn btn-link">
+        <em class="fas fa-times"></em>&nbsp;Annuler
+      </button>
+      <button (click)="save()" type="button" class="btn btn-danger">
+        <em class="fas fa-save"></em>&nbsp;Enregistrer
+      </button>
+    </div>
+
+  </div>
+</div>
