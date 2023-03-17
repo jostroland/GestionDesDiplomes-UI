@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {MinistreDto} from "../../../services/models/ministre-dto";
 import {ActivatedRoute, Router} from "@angular/router";
 import {MinistresService} from "../../../services/services/ministres.service";
-import {HttpErrorResponse} from "@angular/common/http";
+import {ToastMessageService} from "../../../types/toast-message.service";
 
 @Component({
   selector: 'app-ministre-new',
@@ -11,31 +11,30 @@ import {HttpErrorResponse} from "@angular/common/http";
 })
 export class MinistreNewComponent implements OnInit{
   errorMessages: Array<string> = [];
-
   ministre: MinistreDto = {civilite: 'M', datePriseFonction: "", nom: "", prenoms: ""};
-
-
 
   constructor(
     private router:Router,
     private activatedRoute: ActivatedRoute,
-    private ministreService: MinistresService
+    private ministreService: MinistresService,
+    private message: ToastMessageService
   ) {
   }
 
 
   save(){
-    this.errorMessages = [];
+    //this.errorMessages = [];
 
     this.ministreService.saveMinistre({
       body:this.ministre
       }).subscribe({
          next: async ()=>{
+           this.message.showSuccess('Enregister avec succes', 'Enregister!');
            await this.router.navigate(['main/ministre-list']);
          },
-         error:(err:HttpErrorResponse)=>{
+         error:()=>{
            //this.errorMessages = err.error.validationErrors;
-           console.log(this.errorMessages)
+          // console.log(this.errorMessages)
          }
       })
 

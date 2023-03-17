@@ -3,25 +3,52 @@
   <div class="p-3">
 
     <h4>NOUVEAU DIPLOME</h4>
-    <div class="alert alert-danger" role="alert" *ngIf="errorMessages.length">
+    <!--<div class="alert alert-danger" role="alert" *ngIf="errorMessages.length">
       <p *ngFor="let msg of errorMessages">{{msg}}</p>
-    </div>
+    </div>-->
 
     <div class="card p-3">
       <div class="mb-3">
-        <label for="beneficiaire" class="form-label">Beneficiare</label>
-        <input [(ngModel)]="diplome.beneficiaire" type="text" class="form-control" id="beneficiaire" placeholder="Nom beneficiaire">
+        <label class="form-label">Civilité</label>
+        <select [(ngModel)]="diplome.civilite" class="form-select" aria-label="Default select example">
+          <option selected>Choisissez votre civilite</option>
+          <option [ngValue]="'M'">M</option>
+          <option [ngValue]="'Mme'">Mme</option>
+          <option [ngValue]="'Mlle'">Mlle</option>
+        </select>
       </div>
 
       <div class="mb-3">
+        <label for="beneficiaire" class="form-label">Beneficiare</label>
+        <input [(ngModel)]="diplome.beneficiaire" type="text" class="form-control" id="beneficiaire" placeholder="beneficiaire">
+      </div>
+
+
+        <div class="mb-3">
+          <label for="titre" class="form-label">Titre</label>
+          <input [(ngModel)]="diplome.titre" type="text" class="form-control" id="titre" placeholder="Titre">
+        </div>
+
+
+          <div class="mb-3">
+            <label for="fonction" class="form-label">Fonction</label>
+            <input [(ngModel)]="diplome.fonction" type="text" class="form-control" id="fonction" placeholder="Fonction">
+          </div>
+
+          <div class="mb-3">
+            <label for="dateEdition" class="form-label">Date d'édition</label>
+            <input [(ngModel)]="diplome.dateEdition" type="date" class="form-control" id="dateEdition" placeholder="Date édition">
+          </div>
+
+      <div class="mb-3">
         <label for="dateObtention" class="form-label">Date d'obtention</label>
-        <input [(ngModel)]="diplome.dateObtention" type="text" class="form-control" id="dateObtention" placeholder="Nom beneficiaire">
+        <input [(ngModel)]="diplome.dateObtention" type="date" class="form-control" id="dateObtention" placeholder="Nom beneficiaire">
       </div>
 
       <div class="col-lg-12">
         <label for="ministreId" class="form-label">Ministre</label>
         <select id="ministreId" class="form-select" [(ngModel)]="diplome.ministreId">
-          <option selected [value]="0">Liste des ministres...</option>
+          <option selected>Liste des ministres...</option>
           <option *ngFor="let ministre of ministres" [value]="ministre.id">{{ministre.nom}} {{ministre.prenoms}}</option>
         </select>
       </div>

@@ -8,9 +8,60 @@
         </div>
 
         <div class="card p-3">
+          <div class="col-lg-12 d-flex justify-content-between">
+          <div class="my-3 mx-2">
+            Entrée par Page:
+            <select (change)="handlePageSizeChange($event)">
+              <option *ngFor="let size of pageSizes" [ngValue]="size">
+                {{ size }}
+              </option>
+            </select>
+          </div>
+
+          <div class="my-3 mx-2">
+            Rechercher par:
+            <select #filtre (change)="selectFiltre(filtre.value)">
+              <option selected>NUMERO</option>
+              <option >BENEFICIAIRE</option>
+            </select>
+          </div>
+          </div>
+
+          <div class="col-lg-12">
+            <div class="input-group mb-3">
+              <input *ngIf="filtreSelected === 'NUMERO'"
+                     id="numeroEnreg"
+                type="text"
+                class="form-control"
+                placeholder="Rechercher par numero d'enregistrement"
+                [(ngModel)]="numeroEnreg"
+              />
+
+              <input *ngIf="filtreSelected === 'BENEFICIAIRE'"
+                     id="beneficiaire"
+                     type="text"
+                     class="form-control"
+                     placeholder="Rechercher par bénéficiaire"
+                     [(ngModel)]="beneficiaire"
+              />
+
+              <div class="input-group-append">
+                <button
+                  class="btn btn-outline-secondary"
+                  type="button"
+                  (click)="findAllDiplomes()"
+                >
+                  Rechercher
+                </button>
+              </div>
+
+            </div>
+          </div>
+
           <table class="table table-bordered mb-0">
             <thead>
             <tr>
+              <th scope="col">Numéro Enreg.</th>
               <th scope="col">Beneficiare</th>
               <th scope="col">Date d'Obtention</th>
               <th scope="col">Ministre</th>
@@ -18,7 +69,15 @@
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let diplome of diplomes">
+            <tr *ngFor="let diplome of diplomes | paginate:{
+                            currentPage: page,
+                          totalItems: count,
+                          itemsPerPage: pageSize
+              };
+               let i = index
+             "
+            >
+              <th>{{diplome.numeroEnreg}}</th>
               <th>{{diplome.beneficiaire}}</th>
               <td>{{diplome.dateObtention | date:'MM/dd/yyyy'}}</td>
               <td>{{diplome.ministreId}}</td>
@@ -33,6 +92,18 @@
             </tr>
             </tbody>
           </table>
+
+          <div class="d-flex justify-content-end mt-3 mx-2">
+            <pagination-controls
+              previousLabel="Prev"
+              nextLabel="Next"
+              [directionLinks]="true"
+              [responsive]="true"
+              [maxSize]="5"
+              (pageChange)="handlePageChange($event)"
+            ></pagination-controls>
+          </div>
+
         </div>
   </div>
 

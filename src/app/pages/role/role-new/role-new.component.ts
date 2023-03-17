@@ -52,11 +52,11 @@ export class RoleNewComponent implements OnInit{
         'id': this.roleId,body:this.role
       }).subscribe({
         next: async ()=>{
-          this.message.showSuccess('Role modifier avec succes', 'Modifications !')
+          this.message.showSuccess('Role modifier avec succes', 'Modifications !');
           await this.router.navigate(["admin/role-list"])
         },
         error:(err)=>{
-          this.message.showError("Erreur lors de l'enregitrement du role", 'Erreurs !')
+          //this.message.showError("Erreur lors de l'enregitrement du role", 'Erreurs !')
           this.errorMessages = err.error.validationMessage;
         }
       })
@@ -67,12 +67,12 @@ export class RoleNewComponent implements OnInit{
     }).subscribe({
       next: async ()=>{
         // @ts-ignore
-        this.message.showSuccess('Information enregistre avec succes', 'Enregistrements !')
+        this.message.showSuccess('Information enregistre avec succes', 'Enregistrements !');
         await this.router.navigate(["admin/role-list"])
       },
       error:(err)=>{
         // @ts-ignore
-        this.message.showError("Erreurs lors de l'enregistrement du role", 'Erreurs !')
+        //this.message.showError("Erreurs lors de l'enregistrement du role", 'Erreurs !');
         this.errorMessages = err.error.validationMessage;
       }
     })

@@ -40,21 +40,18 @@ export class LoginComponent implements OnInit {
 
         localStorage.setItem('token', data.token as string);
         const helper = new JwtHelperService();
-        // @ts-ignore
-        let decodedToken = helper.decodeToken(data.token);
 
-        // token valid
-        if (decodedToken.roleName === 'ROLE_ADMIN') {
-          await this.router.navigate(['admin/dashboard']);
+        if (data.token != null) {
+           let decodedToken = helper.decodeToken(data.token);
+          // token valid
+          if (decodedToken.roleName === 'ROLE_ADMIN') {
+            await this.router.navigate(['admin/dashboard']);
+          }
+
+          if (decodedToken.roleName === 'ROLE_USER') {
+            await this.router.navigate(['main/dashboard']);
+          }
         }
-
-        if (decodedToken.roleName === 'ROLE_USER') {
-          await this.router.navigate(['main/dashboard']);
-        }
-
-
-
-
       },
       error: (err) => {
         console.log(err);

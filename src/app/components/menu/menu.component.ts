@@ -1,5 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {HelperService} from "../../services/helper/helper.service";
+import {JwtHelperService} from "@auth0/angular-jwt";
+import * as stream from "stream";
 
 @Component({
   selector: 'app-menu',
@@ -17,12 +19,20 @@ export class MenuComponent  implements OnInit{
   ) { }
 
   ngOnInit(): void {
-    this.isAdmin = this.helperService.userRoleName === 'ROLE_ADMIN'? true : false;
-    if (this.isAdmin) {
-      this.role = 'admin';
-    }else{
-      this.role = 'main';
-    }
+
+    /*const helper = new JwtHelperService();
+    let token = localStorage.getItem('token') as string;
+
+    const isTokenExpired = helper.isTokenExpired(token);
+    if (!isTokenExpired) {
+      const helper = new JwtHelperService();
+      let decodedToken = helper.decodeToken(token);
+      if (decodedToken != null){
+        this.isAdmin = decodedToken.roleName === 'ROLE_ADMIN' ? true : false;
+      }
+    }*/
+
+    this.isAdmin = this.helperService.idAdminTrue ? true : false;
   }
 
 }

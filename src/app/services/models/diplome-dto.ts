@@ -2,7 +2,7 @@
 /* eslint-disable */
 export interface DiplomeDto {
   beneficiaire: string;
-  civilite: 'M' | 'Mme' | 'Mlle';
+  civilite?: 'M' | 'Mme' | 'Mlle';
   dateEdition?: string;
   dateObtention?: string;
   fonction: string;

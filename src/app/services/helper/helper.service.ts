@@ -7,29 +7,49 @@ import { retry } from 'rxjs';
 })
 export class HelperService {
 
-  private jwtHelper: JwtHelperService = new JwtHelperService();
+  private jwtHelper: JwtHelperService;
   private decodedToken: any;
-  private readonly item: string;
+  private item: string;
 
   constructor() {
+    this.jwtHelper = new JwtHelperService();
      this.item = localStorage.getItem('token') as string;
     this.decodedToken = this.jwtHelper.decodeToken(this.item);
   }
 
   get userId(): number {
-    return this.decodedToken.userId;
+    if (!this.tokenEpired) {
+      this.decodedToken = this.jwtHelper.decodeToken(this.item);
+    }
+    return this.decodedToken != null ? this.decodedToken.userId : -1;
   }
 
   get userRoleName(): string {
-    return this.decodedToken.roleName;
+    if (!this.tokenEpired) {
+      this.decodedToken = this.jwtHelper.decodeToken(this.item);
+    }
+    return this.decodedToken != null ? this.decodedToken.roleName : null;
   }
 
   get userFullname(): string {
-    return this.decodedToken.fullName;
+    if (!this.tokenEpired) {
+      this.decodedToken = this.jwtHelper.decodeToken(this.item);
+    }
+    return this.decodedToken != null ? this.decodedToken.fullName : null;
   }
 
-  public tokenEpired(): boolean{
-    return this.decodedToken.isTokenExpired(this.item);
+  get tokenEpired(): boolean{
+    this.item = localStorage.getItem('token') as string;
+    const isTokenExpired = this.jwtHelper.isTokenExpired(this.item);
+    return isTokenExpired;
+  }
+
+  get idAdminTrue(): boolean{
+    if (!this.tokenEpired) {
+      this.decodedToken = this.jwtHelper.decodeToken(this.item);
+    }
+    return this.decodedToken != null ? ((this.decodedToken.roleName === 'ROLE_ADMIN')? true : false) : false;
+
   }
 
   public removeToken(): void{

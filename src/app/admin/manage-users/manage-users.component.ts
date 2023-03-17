@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {NewLightUtilisateurDto} from "../../services/models/new-light-utilisateur-dto";
 import {UtilisateursService} from "../../services/services/utilisateurs.service";
 import {Router} from "@angular/router";
+import {ToastMessageService} from "../../types/toast-message.service";
 
 @Component({
   selector: 'app-manage-users',
@@ -17,7 +18,8 @@ export class ManageUsersComponent implements OnInit {
 
   constructor(
     private userService: UtilisateursService,
-    private router: Router
+    private router: Router,
+    private message: ToastMessageService
   ) {
   }
 
@@ -53,6 +55,7 @@ export class ManageUsersComponent implements OnInit {
         'id': this.userIdToUpdate as number
       }).subscribe({
         next: () => {
+          this.message.showSuccess('Utilisateur activé avec succes', 'Enregistrements !');
           this.findAllCustomers();
         }
       });
@@ -61,6 +64,7 @@ export class ManageUsersComponent implements OnInit {
         'id': this.userIdToUpdate as number
       }).subscribe({
         next: () => {
+          this.message.showSuccess('Utilisateur désactivé avec succes', 'Enregistrements !');
         }
       });
     }

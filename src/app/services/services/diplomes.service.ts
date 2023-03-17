@@ -202,6 +202,127 @@ export class DiplomesService extends BaseService {
   }
 
   /**
+   * Path part for operation importerModeleExcel
+   */
+  static readonly ImporterModeleExcelPath = '/gestion-diplome/v1/diplomes/impport/excel';
+
+  /**
+   * Cette methode permet d'importer les infomration de plusieurs Diplomes au format excel
+   *
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `importerModeleExcel()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  importerModeleExcel$Response(params: {
+    file: Blob;
+  },
+  context?: HttpContext
+
+): Observable<StrictHttpResponse<{
+[key: string]: string;
+}>> {
+
+    const rb = new RequestBuilder(this.rootUrl, DiplomesService.ImporterModeleExcelPath, 'get');
+    if (params) {
+      rb.query('file', params.file, {});
+    }
+
+    return this.http.request(rb.build({
+      responseType: 'json',
+      accept: 'application/json',
+      context: context
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return r as StrictHttpResponse<{
+        [key: string]: string;
+        }>;
+      })
+    );
+  }
+
+  /**
+   * Cette methode permet d'importer les infomration de plusieurs Diplomes au format excel
+   *
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `importerModeleExcel$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  importerModeleExcel(params: {
+    file: Blob;
+  },
+  context?: HttpContext
+
+): Observable<{
+[key: string]: string;
+}> {
+
+    return this.importerModeleExcel$Response(params,context).pipe(
+      map((r: StrictHttpResponse<{
+[key: string]: string;
+}>) => r.body as {
+[key: string]: string;
+})
+    );
+  }
+
+  /**
+   * Path part for operation exportTempleExcel
+   */
+  static readonly ExportTempleExcelPath = '/gestion-diplome/v1/diplomes/exportTemplate/excel';
+
+  /**
+   * Cette methode permet d'exporter les infomration un temple au format excel
+   *
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `exportTempleExcel()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  exportTempleExcel$Response(params?: {
+  },
+  context?: HttpContext
+
+): Observable<StrictHttpResponse<void>> {
+
+    const rb = new RequestBuilder(this.rootUrl, DiplomesService.ExportTempleExcelPath, 'get');
+    if (params) {
+    }
+
+    return this.http.request(rb.build({
+      responseType: 'text',
+      accept: '*/*',
+      context: context
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return (r as HttpResponse<any>).clone({ body: undefined }) as StrictHttpResponse<void>;
+      })
+    );
+  }
+
+  /**
+   * Cette methode permet d'exporter les infomration un temple au format excel
+   *
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `exportTempleExcel$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  exportTempleExcel(params?: {
+  },
+  context?: HttpContext
+
+): Observable<void> {
+
+    return this.exportTempleExcel$Response(params,context).pipe(
+      map((r: StrictHttpResponse<void>) => r.body as void)
+    );
+  }
+
+  /**
    * Path part for operation exportToPdf
    */
   static readonly ExportToPdfPath = '/gestion-diplome/v1/diplomes/export/pdf/{numeroEnreg}';
@@ -438,7 +559,7 @@ export class DiplomesService extends BaseService {
    */
   findAllDiplomesByPage$Response(params?: {
     numeroEnreg?: string;
-    beneficiare?: string;
+    beneficiaire?: string;
     page?: number;
     size?: number;
   },
@@ -452,7 +573,7 @@ export class DiplomesService extends BaseService {
     const rb = new RequestBuilder(this.rootUrl, DiplomesService.FindAllDiplomesByPagePath, 'get');
     if (params) {
       rb.query('numeroEnreg', params.numeroEnreg, {});
-      rb.query('beneficiare', params.beneficiare, {});
+      rb.query('beneficiaire', params.beneficiaire, {});
       rb.query('page', params.page, {});
       rb.query('size', params.size, {});
     }
@@ -482,7 +603,7 @@ export class DiplomesService extends BaseService {
    */
   findAllDiplomesByPage(params?: {
     numeroEnreg?: string;
-    beneficiare?: string;
+    beneficiaire?: string;
     page?: number;
     size?: number;
   },

@@ -21,10 +21,11 @@
           <table class="table table-bordered mb-0">
             <thead>
             <tr>
+              <th scope="col" *ngIf="!isAdmin">Id</th>
               <th scope="col">Nom</th>
               <th scope="col">Prénoms</th>
               <th scope="col">Date Prise Fonction</th>
-              <th scope="col">Actions</th>
+              <th scope="col"  *ngIf="isAdmin">Actions</th>
             </tr>
             </thead>
             <tbody>
@@ -36,12 +37,13 @@
               };
                let i = index
              ">
+              <th *ngIf="!isAdmin">{{ministre.id}}</th>
               <th>{{ministre.civilite}} {{ministre.nom}}</th>
               <td>{{ministre.prenoms}}</td>
               <td>{{ministre.datePriseFonction | date:'MM/dd/yyyy'}}</td>
-              <td class="cursor-pointer">
+              <td class="cursor-pointer"  *ngIf="isAdmin">
 
-                <em (click)="update(ministre.id)" class="ri-ball-pen-fill text-primary fs-5"></em>
+                <em  (click)="update(ministre.id)" class="ri-ball-pen-fill text-primary fs-5"></em>
                 &nbsp;&nbsp;
                 <em (click)="ministreIdToDelete = ministre.id" class="ri-delete-bin-7-fill text-danger fs-5" data-bs-toggle="modal"
                     data-bs-target="#staticBackdrop"></em>

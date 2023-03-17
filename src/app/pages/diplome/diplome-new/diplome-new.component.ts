@@ -6,6 +6,7 @@ import {DiplomeDto} from "../../../services/models/diplome-dto";
 import {DiplomesService} from "../../../services/services/diplomes.service";
 import {MinistresService} from "../../../services/services/ministres.service";
 import {MinistreDto} from "../../../services/models/ministre-dto";
+import {ToastMessageService} from "../../../types/toast-message.service";
 
 @Component({
   selector: 'app-diplome-new',
@@ -23,7 +24,7 @@ export class DiplomeNewComponent implements OnInit{
     dateEdition: "",
     dateObtention: "",
     fonction: "",
-    numeroEnreg: "",
+    numeroEnreg: "string",
     titre: ""
   };
   ministres: Array<MinistreDto> = [];
@@ -53,7 +54,8 @@ export class DiplomeNewComponent implements OnInit{
     private router:Router,
     private activatedRoute:ActivatedRoute,
     private diplomeService:DiplomesService,
-    private ministreService:MinistresService
+    private ministreService:MinistresService,
+    private message: ToastMessageService
   ) {
   }
 
@@ -65,12 +67,13 @@ export class DiplomeNewComponent implements OnInit{
       body: this.diplome
     }).subscribe({
       next: async ()=>{
+        this.message.showSuccess('Diplome enregistrer avec succes', 'Enregistrer !');
         await this.router.navigate(["main/diplome-list"])
       },
       error:(err)=>{
-        this.errorMessages = err.error.validationMessage;
+        //this.errorMessages = err.error.validationMessage;
       }
-    })
+    });
   }
 
   private findAllMinistres() {

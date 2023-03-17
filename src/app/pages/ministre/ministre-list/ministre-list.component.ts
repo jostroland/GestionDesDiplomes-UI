@@ -4,6 +4,7 @@ import {MinistresService} from "../../../services/services/ministres.service";
 import {HelperService} from "../../../services/helper/helper.service";
 import {Router} from "@angular/router";
 import {RoleDto} from "../../../services/models/role-dto";
+import {ToastMessageService} from "../../../types/toast-message.service";
 
 @Component({
   selector: 'app-ministre-list',
@@ -15,6 +16,7 @@ export class MinistreListComponent {
   //ministres: Array<MinistreDto> = [];
   ministres:MinistreDto[] = [];
   errorMessages: Array<string> = [];
+  isAdmin: boolean = true;
 
   page = 1;
   count = 0;
@@ -24,17 +26,18 @@ export class MinistreListComponent {
   constructor(
     private ministresService: MinistresService,
     private helperService: HelperService,
-    private router: Router
+    private router: Router,
+    private message: ToastMessageService
   ) { }
 
   ngOnInit(): void {
+    this.isAdmin = this.helperService.userRoleName === 'ROLE_ADMIN'? true : false;
     this.findAllMinistres();
   }
 
 
   getRequestParams( page: number, pageSize: number): any {
     let params: any = {};
-
     if (page) {
       params[`page`] = page - 1;
     }
@@ -42,7 +45,6 @@ export class MinistreListComponent {
     if (pageSize) {
       params[`size`] = pageSize;
     }
-
     return params;
   }
 
@@ -86,6 +88,7 @@ export class MinistreListComponent {
         'id': this.ministreIdToDelete
       }).subscribe({
         next: () => {
+          this.message.showSuccess("Ministre supprimmer avec succès","Supprimer !");
           this.findAllMinistres();
         }
       });
